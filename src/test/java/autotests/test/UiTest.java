@@ -4,10 +4,7 @@ import autotests.pages.AutomationPracticeFormPage;
 import autotests.pages.ModalWindowTable;
 import autotests.settings.BaseTest;
 import autotests.settings.TestData;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UiTest extends BaseTest {
 
@@ -42,37 +39,21 @@ public class UiTest extends BaseTest {
                 .selectGenderByValue(TestData.GENDER)
                 .mobileNumberInput(TestData.MOBILE)
                 .submitButtonPress();
-        assertTrue(resultTable.validateTitle());
+        resultTable.validateTitle();
     }
 
     @Test
     public void whenFillFullFormThenModalWindowAppearAndCheckCorrectData(){
         ModalWindowTable resultTable = new ModalWindowTable();
-        SoftAssertions softly = new SoftAssertions();
         fillFormWithTestData();
-        softly.assertThat(resultTable.validateStudentName()).isTrue();
-        softly.assertThat(resultTable.validateStudentEmail()).isTrue();
-        softly.assertThat(resultTable.validateGender()).isTrue();
-        softly.assertThat(resultTable.validateDateOfBirth()).isTrue();
-        softly.assertThat(resultTable.validateMobile()).isTrue();
-        softly.assertThat(resultTable.validateSubject()).isTrue();
-        softly.assertThat(resultTable.validateHobby()).isTrue();
-        softly.assertThat(resultTable.validatePicture()).isTrue();
-        softly.assertThat(resultTable.validateAddress()).isTrue();
-        softly.assertThat(resultTable.validateStateAndCity()).isTrue();
-        softly.assertAll();
+        resultTable.validateAllData();
     }
 
     @Test
     public void whenIncorrectDataThenRedBorder(){
         AutomationPracticeFormPage formPage = new AutomationPracticeFormPage();
-        SoftAssertions softly = new SoftAssertions();
         formPage.openPage("https://demoqa.com/automation-practice-form")
                 .submitButtonPress();
-        softly.assertThat(formPage.firstNameBorderColorCheck()).isTrue();
-        softly.assertThat(formPage.lastNameBorderColorCheck()).isTrue();
-        softly.assertThat(formPage.mobileNumberBorderColorCheck()).isTrue();
-        softly.assertThat(formPage.radiobuttonBorderColorCheck()).isTrue();
-        softly.assertAll();
+        formPage.validateBorderColors();
     }
 }

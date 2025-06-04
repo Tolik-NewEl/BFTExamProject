@@ -5,6 +5,8 @@ import io.qameta.allure.Step;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.Duration;
+
 import static autotests.settings.Expectation.waitForElement;
 import static com.codeborne.selenide.Condition.*;
 import static java.time.Duration.ofSeconds;
@@ -39,5 +41,12 @@ public class Input {
     public boolean checkRedBorderColor(){
         return selector.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"))
                 .exists();
+    }
+
+    @Step("Получаем цвет рамки")
+    public String getBorderColor(String expectedColor) {
+        selector.shouldBe(visible)
+                .shouldHave(cssValue("border-color", expectedColor), Duration.ofSeconds(2));
+        return selector.getCssValue("border-color");
     }
 }

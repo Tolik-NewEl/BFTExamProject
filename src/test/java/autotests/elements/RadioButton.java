@@ -5,6 +5,8 @@ import io.qameta.allure.Step;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.Duration;
+
 import static autotests.settings.Expectation.waitForElement;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
@@ -44,7 +46,14 @@ public class RadioButton {
 
     @Step("Выбираем пол")
     public RadioButton valueClick(String gender){
-        $x(String.format("//div[@id='genterWrapper']//*[text()='%s']", gender)).click();;
+        $x(String.format("//div[@id='genterWrapper']//*[text()='%s']", gender)).click();
         return this;
+    }
+
+    @Step("Получаем цвет рамки")
+    public String getBorderColor(String expectedColor) {
+        selector.shouldBe(visible)
+                .shouldHave(cssValue("color", expectedColor), Duration.ofSeconds(2));
+        return selector.getCssValue("color");
     }
 }

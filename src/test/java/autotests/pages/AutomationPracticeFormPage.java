@@ -2,6 +2,7 @@ package autotests.pages;
 
 import autotests.elements.*;
 import io.qameta.allure.Step;
+import org.assertj.core.api.SoftAssertions;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -173,6 +174,37 @@ public class AutomationPracticeFormPage {
     @Step("Проверяем цвет радиобаттона")
     public boolean radiobuttonBorderColorCheck(){
         return genderMale.checkRedBorderColor();
+    }
+
+    @Step("Получаем цвет рамки инпута Имени")
+    public String getFirstNameInputBorderColor() {
+        return firstName.getBorderColor("rgb(220, 53, 69)");
+    }
+
+    @Step("Получаем цвет рамки инпута Фамилии")
+    public String getLastNameInputBorderColor() {
+        return lastName.getBorderColor("rgb(220, 53, 69)");
+    }
+
+    @Step("Получаем цвет рамки инпута телефона")
+    public String getMobileNumberInputBorderColor() {
+        return mobileNumber.getBorderColor("rgb(220, 53, 69)");
+    }
+
+    @Step("Получаем цвет радиобаттона")
+    public String getGenderRadiobuttonBorderColor() {
+        return genderMale.getBorderColor("rgba(220, 53, 69, 1)");
+    }
+
+    @Step("Проверяем цвета рамок при валидации")
+    public void validateBorderColors() {
+        SoftAssertions softly = new SoftAssertions();
+
+        softly.assertThat(getFirstNameInputBorderColor()).isEqualTo("rgb(220, 53, 69)");
+        softly.assertThat(getLastNameInputBorderColor()).isEqualTo("rgb(220, 53, 69)");
+        softly.assertThat(getMobileNumberInputBorderColor()).isEqualTo("rgb(220, 53, 69)");
+        softly.assertThat(getGenderRadiobuttonBorderColor()).isEqualTo("rgba(220, 53, 69, 1)");
+        softly.assertAll();
     }
 
 }
