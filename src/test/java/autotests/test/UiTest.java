@@ -7,7 +7,7 @@ import autotests.settings.TestData;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UiTest extends BaseTest {
 
@@ -42,14 +42,25 @@ public class UiTest extends BaseTest {
                 .selectGenderByValue(TestData.GENDER)
                 .mobileNumberInput(TestData.MOBILE)
                 .submitButtonPress();
-        assertEquals((resultTable.getTitleText()), "Thanks for submitting the form");
+        assertTrue(resultTable.validateTitle());
     }
 
     @Test
     public void whenFillFullFormThenModalWindowAppearAndCheckCorrectData(){
         ModalWindowTable resultTable = new ModalWindowTable();
+        SoftAssertions softly = new SoftAssertions();
         fillFormWithTestData();
-        resultTable.validateData();
+        softly.assertThat(resultTable.validateStudentName()).isTrue();
+        softly.assertThat(resultTable.validateStudentEmail()).isTrue();
+        softly.assertThat(resultTable.validateGender()).isTrue();
+        softly.assertThat(resultTable.validateDateOfBirth()).isTrue();
+        softly.assertThat(resultTable.validateMobile()).isTrue();
+        softly.assertThat(resultTable.validateSubject()).isTrue();
+        softly.assertThat(resultTable.validateHobby()).isTrue();
+        softly.assertThat(resultTable.validatePicture()).isTrue();
+        softly.assertThat(resultTable.validateAddress()).isTrue();
+        softly.assertThat(resultTable.validateStateAndCity()).isTrue();
+        softly.assertAll();
     }
 
     @Test

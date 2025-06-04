@@ -1,39 +1,65 @@
 package autotests.pages;
 
+import autotests.elements.Table;
+import autotests.elements.TextElement;
 import autotests.settings.TestData;
-import com.codeborne.selenide.SelenideElement;
-
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class ModalWindowTable {
-    protected final SelenideElement title = $x("//div[@class='modal-title h4']");
-    protected final SelenideElement resultTable = $x("//table[@class='table table-dark table-striped table-bordered table-hover']");
+    protected final Table resultTable = new Table("Таблица в модальном окне", $x("//table[@class='table table-dark table-striped table-bordered table-hover']"));
+    protected final TextElement title = new TextElement("Заголовок модального окна", $x("//div[@class='modal-title h4']"));
 
-    public String getTitleText(){
-        return title.getText();
+    public boolean validateTitle(){
+        return title.getElementText().equals("Thanks for submitting the form");
     }
 
-    public void validateData() {
-        resultTable.$x(".//td[text()='Student Name']/following-sibling::td")
-                .shouldHave(text(TestData.FIRST_NAME + " " + TestData.LAST_NAME));
-        resultTable.$x(".//td[text()='Student Email']/following-sibling::td")
-                .shouldHave(text(TestData.EMAIL));
-        resultTable.$x(".//td[text()='Gender']/following-sibling::td")
-                .shouldHave(text(TestData.GENDER));
-        resultTable.$x(".//td[text()='Mobile']/following-sibling::td")
-                .shouldHave(text(TestData.MOBILE));
-        resultTable.$x(".//td[text()='Date of Birth']/following-sibling::td")
-                .shouldHave(text(TestData.DATE_OF_BIRTH));
-        resultTable.$x(".//td[text()='Subjects']/following-sibling::td")
-                .shouldHave(text(TestData.SUBJECT));
-        resultTable.$x(".//td[text()='Hobbies']/following-sibling::td")
-                .shouldHave(text(TestData.HOBBY));
-        resultTable.$x(".//td[text()='Picture']/following-sibling::td")
-                .shouldHave(text(TestData.FILE_NAME));
-        resultTable.$x(".//td[text()='Address']/following-sibling::td")
-                .shouldHave(text(TestData.ADDRESS));
-        resultTable.$x(".//td[text()='State and City']/following-sibling::td")
-                .shouldHave(text(TestData.STATE + " " + TestData.CITY));
+    public boolean validateStudentName() {
+        return resultTable.getValueByFieldName("Student Name")
+                .equals(TestData.FIRST_NAME + " " + TestData.LAST_NAME);
+    }
+
+    public boolean validateStudentEmail() {
+        return resultTable.getValueByFieldName("Student Email")
+                .equals(TestData.EMAIL);
+    }
+
+    public boolean validateGender() {
+        return resultTable.getValueByFieldName("Gender")
+                .equals(TestData.GENDER);
+    }
+
+    public boolean validateMobile() {
+        return resultTable.getValueByFieldName("Mobile")
+                .equals(TestData.MOBILE);
+    }
+
+    public boolean validateDateOfBirth() {
+        return resultTable.getValueByFieldName("Date of Birth")
+                .equals(TestData.DATE_OF_BIRTH);
+    }
+
+    public boolean validateSubject() {
+        return resultTable.getValueByFieldName("Subjects")
+                .equals(TestData.SUBJECT);
+    }
+
+    public boolean validateHobby() {
+        return resultTable.getValueByFieldName("Hobbies")
+                .equals(TestData.HOBBY);
+    }
+
+    public boolean validatePicture() {
+        return resultTable.getValueByFieldName("Picture")
+                .equals(TestData.FILE_NAME);
+    }
+
+    public boolean validateAddress() {
+        return resultTable.getValueByFieldName("Address")
+                .equals(TestData.ADDRESS);
+    }
+
+    public boolean validateStateAndCity() {
+        return resultTable.getValueByFieldName("State and City")
+                .equals(TestData.STATE + " " + TestData.CITY);
     }
 }
